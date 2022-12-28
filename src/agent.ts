@@ -11,6 +11,16 @@ import {
 	FindingType,
 } from "forta-agent";
 import { IS_DEVELOPMENT, IS_DEBUG, DEBUG_TARGET_TOKEN } from "./contants";
+import { readFileSync } from "fs";
+
+const CONFIG_FILE = "config.json";
+const config = JSON.parse(readFileSync(CONFIG_FILE, "utf-8"));
+
+async function analyzeDonationFrequency(
+	txEvent: TransactionEvent
+): Promise<number> {
+	// Analyze donation frequency based on the transaction data
+}
 
 export const ERC20_TRANSFER_EVENT =
 	"event Transfer(address indexed from, address indexed to, uint256 value)";
@@ -84,8 +94,7 @@ const handleTransaction: HandleTransaction = async (
 // }
 
 export default {
-	// initialize,
+	// Add analyzeDonationFrequency to the export
+	analyzeDonationFrequency,
 	handleTransaction,
-	// handleBlock,
-	// handleAlert
 };
