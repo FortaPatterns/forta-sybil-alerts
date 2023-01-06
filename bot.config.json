@@ -1,3 +1,6 @@
 {
-	"developerAbbreviation": "FG"
+	"developerAbbreviation": "FG",
+	"monitoring_parameters": {
+		"donation_frequency_threshold": 10
+	}
 }
