@@ -77,6 +77,18 @@ const handleTransaction: HandleTransaction = async (
 	return findings;
 };
 
+const grantOwners: Set<string> = new Set([
+	// Add the list of grant owners' addresses here
+]);
+
+async function monitorGrantOwners(txEvent: TransactionEvent): Promise<void> {
+	const from = txEvent.from.toLowerCase();
+
+	if (grantOwners.has(from)) {
+		console.log(`Grant owner activity detected from address: ${from}`);
+	}
+}
+
 // const initialize: Initialize = async () => {
 //   // do some initialization on startup e.g. fetch data
 // }
@@ -94,7 +106,8 @@ const handleTransaction: HandleTransaction = async (
 // }
 
 export default {
-	// Add analyzeDonationFrequency to the export
+	// Add monitorGrantOwners to the export
+	monitorGrantOwners,
 	analyzeDonationFrequency,
 	handleTransaction,
 };
