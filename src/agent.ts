@@ -89,6 +89,24 @@ async function monitorGrantOwners(txEvent: TransactionEvent): Promise<void> {
 	}
 }
 
+const categories: Record<string, number> = {};
+
+async function trackTrendingCategories(
+	txEvent: TransactionEvent
+): Promise<void> {
+	// Example: Assuming the transaction event object has a category property
+	const category = txEvent.category;
+
+	if (category) {
+		if (!categories[category]) {
+			categories[category] = 0;
+		}
+		categories[category]++;
+
+		console.log(`Updated trending categories: ${JSON.stringify(categories)}`);
+	}
+}
+
 // const initialize: Initialize = async () => {
 //   // do some initialization on startup e.g. fetch data
 // }
