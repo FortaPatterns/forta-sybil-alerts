@@ -107,6 +107,17 @@ async function trackTrendingCategories(
 	}
 }
 
+async function flagPotentialSybil(txEvent: TransactionEvent): Promise<void> {
+	// Example: Assuming the transaction event object has an isSybil property
+	const isSybil = txEvent.isSybil;
+
+	if (isSybil) {
+		console.log(
+			`Potential Sybil attack detected in transaction: ${txEvent.transaction.hash}`
+		);
+	}
+}
+
 // const initialize: Initialize = async () => {
 //   // do some initialization on startup e.g. fetch data
 // }
