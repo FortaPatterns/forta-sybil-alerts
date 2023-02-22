@@ -16,10 +16,25 @@ import { readFileSync } from "fs";
 const CONFIG_FILE = "config.json";
 const config = JSON.parse(readFileSync(CONFIG_FILE, "utf-8"));
 
+const donationFrequency: Record<string, number> = {};
+
 async function analyzeDonationFrequency(
 	txEvent: TransactionEvent
-): Promise<number> {
-	// Analyze donation frequency based on the transaction data
+): Promise<void> {
+	// Example: Assuming the transaction event object has a donation property
+	const donation = txEvent.donation;
+	const from = txEvent.from.toLowerCase();
+
+	if (donation) {
+		if (!donationFrequency[from]) {
+			donationFrequency[from] = 0;
+		}
+		donationFrequency[from]++;
+
+		console.log(
+			`Updated donation frequency for ${from}: ${donationFrequency[from]}`
+		);
+	}
 }
 
 export const ERC20_TRANSFER_EVENT =
