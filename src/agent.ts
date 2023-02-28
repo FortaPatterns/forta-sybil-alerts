@@ -37,6 +37,34 @@ async function analyzeDonationFrequency(
 	}
 }
 
+interface FundingRound {
+	id: string;
+	startDate: Date;
+	endDate: Date;
+	totalFunds: number;
+}
+
+const fundingRounds: Record<string, FundingRound> = {
+	// Fill this object with funding round data
+};
+
+async function analyzeFundingRound(txEvent: TransactionEvent): Promise<void> {
+	// Example: Assuming the transaction event object has a fundingRoundId property
+	const fundingRoundId = txEvent.fundingRoundId;
+
+	if (fundingRoundId) {
+		const fundingRound = fundingRounds[fundingRoundId];
+
+		if (fundingRound) {
+			console.log(
+				`Funding round ${fundingRoundId} details: ${JSON.stringify(
+					fundingRound
+				)}`
+			);
+		}
+	}
+}
+
 export const ERC20_TRANSFER_EVENT =
 	"event Transfer(address indexed from, address indexed to, uint256 value)";
 export const TETHER_ADDRESS = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
