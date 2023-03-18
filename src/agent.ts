@@ -268,44 +268,57 @@ async function handleTransactionForNetwork(
 	// Perform network-specific transaction handling using the provider
 }
 
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
 
 interface NetworkConfig {
-  name: string;
-  rpcUrl: string;
-  chainId: number;
+	name: string;
+	rpcUrl: string;
+	chainId: number;
 }
 
 const networks: Record<string, NetworkConfig> = {
-  mainnet: {
-    name: 'mainnet',
-    rpcUrl: 'https://mainnet.infura.io/v3/YOUR-PROJECT-ID',
-    chainId: 1,
-  },
-  rinkeby: {
-    name: 'rinkeby',
-    rpcUrl: 'https://rinkeby.infura.io/v3/YOUR-PROJECT-ID',
-    chainId: 4,
-  },
-  // Add more networks if needed
+	mainnet: {
+		name: "mainnet",
+		rpcUrl: "https://mainnet.infura.io/v3/YOUR-PROJECT-ID",
+		chainId: 1,
+	},
+	rinkeby: {
+		name: "rinkeby",
+		rpcUrl: "https://rinkeby.infura.io/v3/YOUR-PROJECT-ID",
+		chainId: 4,
+	},
+	// Add more networks if needed
 };
 
-async function getProviderForNetwork(network: string): Promise<ethers.providers.JsonRpcProvider> {
-  const networkConfig = networks[network];
+async function getProviderForNetwork(
+	network: string
+): Promise<ethers.providers.JsonRpcProvider> {
+	const networkConfig = networks[network];
 
-  if (!networkConfig) {
-    throw new Error(`Network not supported: ${network}`);
-  }
+	if (!networkConfig) {
+		throw new Error(`Network not supported: ${network}`);
+	}
 
-  return new ethers.providers.JsonRpcProvider(networkConfig.rpcUrl, networkConfig.chainId);
+	return new ethers.providers.JsonRpcProvider(
+		networkConfig.rpcUrl,
+		networkConfig.chainId
+	);
 }
 
-async function handleTransactionForNetwork(txEvent: TransactionEvent, network: string): Promise<void> {
-  const provider = await getProviderForNetwork(network);
+async function handleTransactionForNetwork(
+	txEvent: TransactionEvent,
+	network: string
+): Promise<void> {
+	const provider = await getProviderForNetwork(network);
 
-  // Perform network-specific transaction handling using the provider
+	// Perform network-specific transaction handling using the provider
 }
 
+async function analyzeNonce(txEvent: TransactionEvent): Promise<void> {
+	// Example: Assuming the transaction event object has a nonce property
+	const nonce = txEvent.nonce;
+	console.log(`Transaction nonce: ${nonce}`);
+}
 
 export default {
 	// Add monitorGrantOwners to the export
