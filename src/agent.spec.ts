@@ -43,6 +43,29 @@ describe("donation frequency analysis", () => {
   );
 });
 
+import agent, { analyzeNonce } from "./agent";
+// ...
+describe("nonce analysis", () => {
+  const mockTxEvent = createTransactionEvent({} as any);
+
+  beforeAll(() => {
+    // Example: Assuming the transaction event object has a nonce property
+    mockTxEvent.nonce = 42;
+  });
+
+  it("should log the transaction nonce", async () => {
+    const consoleLogSpy = jest.spyOn(console, "log");
+    consoleLogSpy.mockImplementation(() => {});
+
+    await analyzeNonce(mockTxEvent);
+
+    expect(consoleLogSpy).toHaveBeenCalledWith("Transaction nonce: 42");
+
+    consoleLogSpy.mockRestore();
+  });
+});
+
+
 
   describe("handleTransaction", () => {
     it("returns empty findings if there are no Tether transfers", async () => {
