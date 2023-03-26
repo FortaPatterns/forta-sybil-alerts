@@ -81,6 +81,36 @@ describe("nonce analysis", () => {
       );
     });
 
+    import agent, { getProviderForNetwork, handleTransactionForNetwork } from "./agent";
+// ...
+describe("network support", () => {
+  const mockTxEvent = createTransactionEvent({} as any);
+
+  it("should get the provider for the specified network", async () => {
+    const mainnetProvider = await getProviderForNetwork("mainnet");
+    const rinkebyProvider = await getProviderForNetwork("rinkeby");
+
+    expect(mainnetProvider).toBeInstanceOf(ethers.providers.JsonRpcProvider);
+    expect(rinkebyProvider).toBeInstanceOf(ethers.providers.JsonRpcProvider);
+    expect(mainnetProvider.network.chainId).toEqual(1);
+    expect(rinkebyProvider.network.chainId).toEqual(4);
+  });
+
+  it("should throw an error for unsupported networks", async () => {
+    await expect(getProviderForNetwork("unsupported")).rejects.toThrow("Network not supported: unsupported");
+  });
+
+  it("should handle transaction for a specific network", async () => {
+    const handleTransactionForNetworkSpy = jest.spyOn(agent, "handleTransactionForNetwork");
+
+    await handleTransactionForNetwork(mockTxEvent, "mainnet");
+
+    expect(handleTransactionForNetworkSpy).toHaveBeenCalledWith(mockTxEvent, "mainnet");
+
+    handleTransactionForNetworkSpy.mockRestore();
+  });
+});
+
     it("returns a finding if there is a Tether transfer over 10,000", async () => {
       const mockTetherTransferEvent = {
         args: {
