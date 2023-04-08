@@ -111,6 +111,28 @@ describe("network support", () => {
   });
 });
 
+import agent, { analyzeDonationFrequency } from "./agent";
+// ...
+describe("donation frequency analysis", () => {
+  const mockTxEvent = createTransactionEvent({} as any);
+
+  beforeAll(() => {
+    // Set up mock donation data
+    mockTxEvent.donationData = [
+      { timestamp: 1000, amount: 100 },
+      { timestamp: 2000, amount: 200 },
+      { timestamp: 3000, amount: 300 },
+    ];
+  });
+
+  it("should calculate donation frequency", async () => {
+    const frequency = await analyzeDonationFrequency(mockTxEvent);
+
+    expect(frequency).toEqual(3);
+  });
+});
+
+
     it("returns a finding if there is a Tether transfer over 10,000", async () => {
       const mockTetherTransferEvent = {
         args: {
